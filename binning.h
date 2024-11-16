@@ -10,13 +10,13 @@
 void process_bin(int index, const std::string& sequence, const std::vector<std::string>& reads);
 
 // Declare a function to create JSON files in parallel
-void create_json_files_parallel(const std::unordered_map<int, std::vector<std::string>>& binned_reads, 
+void create_json_files_parallel(const std::unordered_map<int, std::vector<std::string>>& binned_reads,
                                 const std::unordered_map<int, std::string>& barcode_data);
 
 std::map<std::string, std::string> load_csv(const std::string& filename);
 
 void printCredentials(const std::map<std::string, std::string>& data);
 
-void binner(std::string design_file_path, std::string reads_file_path);
+int binner(const std::string &design_file_path, const std::string &reads_file_path);
 
 #endif // BINNING_H

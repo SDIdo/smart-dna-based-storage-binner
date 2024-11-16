@@ -133,12 +133,7 @@ void create_json_files_parallel(const std::unordered_map<std::string, std::vecto
     std::cout << "All bins processed.\n";
 }
 
-int main() {
-    // Define paths to the CSV and reads files
-    std::string design_file_path = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\deep_design.csv";
-    std::string reads_file_path = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\reads_trimmed.txt";
-
-    // Load data from CSV file into a map structure
+int binner(const std::string &design_file_path, const std::string &reads_file_path) {
     std::unordered_map<std::string, std::string> index_design = load_csv(design_file_path);
     if (index_design.empty()) {
         std::cerr << "Failed to load index design data from " << design_file_path << std::endl;

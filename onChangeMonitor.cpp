@@ -9,18 +9,20 @@
 #include "binning.h"
 #include "multi_threaded_preprocessor.h"
 
+namespace fs = std::filesystem;
+
 // Function to scan a directory and return a map of file names and their modification times
-std::map<std::string, std::filesystem::file_time_type> scan_directory(const std::string& directory) {
-    std::map<std::string, std::filesystem::file_time_type> files;
+std::map<std::string, fs::file_time_type> scan_directory(const std::string& directory) {
+    std::map<std::string, fs::file_time_type> files;
 
     // Iterate over the contents of the directory
-    for (const auto& entry : std::filesystem::directory_iterator(directory)) {
-        if (std::filesystem::is_regular_file(entry.status())) {
+    for (const auto& entry : fs::directory_iterator(directory)) {
+        if (fs::is_regular_file(entry.status())) {
             // Store the file name and its last modification time in the map
-            files[entry.path().filename().string()] = std::filesystem::last_write_time(entry);
+            files[entry.path().filename().string()] = fs::last_write_time(entry);
         }
     }
-    
+
     return files;
 }
 
@@ -29,9 +31,7 @@ int lib_length = 140;
 
 // path to the sequencing output - can be .txt or a .fastq file or a path to a folder with many .fastq files
 // this is the file the includes all the basecalled reads that we want to processed
-std::string reads_path = "fastq_runid.fastq";
-
-std::string design_file_path = "./deep_design.csv";
+std::string design_file_path = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\deep_design.csv";
 
 void monitor_directory(const std::string& directory, int interval = 5) {
     std::cout << "Monitoring directory: " << directory << std::endl;
@@ -52,12 +52,11 @@ void monitor_directory(const std::string& directory, int interval = 5) {
         }
         if (!new_files.empty()) {
             for (const auto& file : new_files) {
-                std::string processed_file = "mock_data/" + file;
+                std::string processed_file = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\mock_data\\" + file;
                 std::cout << "New files added: " << processed_file << std::endl;
-                std::string reads_trimmed_path = "processed_data/reads_trimmed_" + 
-                    std::to_string(std::time(nullptr)) + ".txt";  // Format date as you need
+                std::string reads_trimmed_path = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\processed_data\\reads_trimmed_G";
                 int lib_length = 100;  // Assume lib_length is available
-                std::string design_file_path = "path/to/design_file";  // Assume design_file_path is available
+                std::string design_file_path = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\deep_design.csv";  // Assume design_file_path is available
 
                 read_preprocessor(processed_file, reads_trimmed_path, lib_length);
                 binner(design_file_path, reads_trimmed_path);
@@ -99,7 +98,8 @@ void monitor_directory(const std::string& directory, int interval = 5) {
     }
 }
 
-void main() {
-    std::string directory_to_monitor = "mock_data";
+int main() {
+    std::string directory_to_monitor = "C:\\Users\\booki\\Desktop\\FunMoney\\DNA Storage\\concise_cpp\\mock_data";
     monitor_directory(directory_to_monitor, 5);
+    return 0;
 }
