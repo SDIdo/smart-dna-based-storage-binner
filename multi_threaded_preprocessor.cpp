@@ -82,8 +82,6 @@ std::string process_line(const std::string& line, const std::string& front_prime
 }
 
 void read_preprocessor(const std::string& file_input_path = "./Calls.fastq", const std::string& preprocessed_reads_path = "./reads_processed.fastq", int lib_length = 140) {
-    std::cout << "Entered read_preprocessor with file: " << file_input_path << "\n";
-
     std::ofstream file_output_without_primers(preprocessed_reads_path);
     if (!file_output_without_primers.is_open()) {
         std::cerr << "Failed to open output file: " << preprocessed_reads_path << std::endl;
@@ -94,7 +92,7 @@ void read_preprocessor(const std::string& file_input_path = "./Calls.fastq", con
     std::string back_primer = "CTGTCTCTTA";
 
     if (fs::is_regular_file(file_input_path)) {
-        std::cout << "The path '" << file_input_path << "' is a file." << std::endl;
+        // std::cout << "The path '" << file_input_path << "' is a file." << std::endl;
         std::ifstream file_input_fastq(file_input_path);
 
         if (!file_input_fastq.is_open()) {
@@ -120,9 +118,9 @@ void read_preprocessor(const std::string& file_input_path = "./Calls.fastq", con
                 auto result = future.get();
                 if (!result.empty()) {
                     file_output_without_primers << result << "\n";
-                    std::cout << "Wrote sequence: " << result << "\n"; // Debug print
-                } else {
-                    std::cout << "No valid sequence found\n"; // Debug print
+                    // std::cout << "Wrote sequence: " << result << "\n"; // Debug print
+                // } else {
+                //     std::cout << "No valid sequence found\n"; // Debug print
                 }
             } catch (const std::exception& e) {
                 std::cerr << "Error processing line: " << e.what() << std::endl;

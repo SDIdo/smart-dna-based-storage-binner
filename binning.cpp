@@ -108,7 +108,7 @@ void process_bin(const std::string& index, const std::string& sequence, std::vec
         out_file << "  ]\n"; // End of noisy_copies array
         out_file << "}\n";   // End of JSON object
         out_file.close();
-        std::cout << "Data written to " << json_filename << "\n"; // Confirmation message
+        // std::cout << "Data written to " << json_filename << "\n"; // Confirmation message
     } else {
         std::cerr << "Failed to open file " << json_filename << " for writing.\n";
     }
@@ -125,7 +125,6 @@ void create_json_files_parallel(const std::unordered_map<std::string, std::vecto
             futures.push_back(std::async(std::launch::async, process_bin, index, sequence, reads));
         }
     }
-
     std::cout << "Processing bins...\n";
     for (auto& future : futures) {
         future.get(); // Wait for each future to complete
